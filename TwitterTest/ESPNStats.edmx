@@ -1,0 +1,971 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ESPNStatsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ESPNStatsModelStoreContainer">
+          <EntitySet Name="DefensiveStats" EntityType="ESPNStatsModel.Store.DefensiveStats" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="KickingStats" EntityType="ESPNStatsModel.Store.KickingStats" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Logger" EntityType="ESPNStatsModel.Store.Logger" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NFLTeams" EntityType="ESPNStatsModel.Store.NFLTeams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PassingStats" EntityType="ESPNStatsModel.Store.PassingStats" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Players" EntityType="ESPNStatsModel.Store.Players" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PuntingStats" EntityType="ESPNStatsModel.Store.PuntingStats" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ReceivingStats" EntityType="ESPNStatsModel.Store.ReceivingStats" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ReturnStats" EntityType="ESPNStatsModel.Store.ReturnStats" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RushingStats" EntityType="ESPNStatsModel.Store.RushingStats" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ScoringStats" EntityType="ESPNStatsModel.Store.ScoringStats" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TweetIDs" EntityType="ESPNStatsModel.Store.TweetIDs" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_DefensiveStats_Players" Association="ESPNStatsModel.Store.FK_DefensiveStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="DefensiveStats" EntitySet="DefensiveStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KickingStats_Players" Association="ESPNStatsModel.Store.FK_KickingStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="KickingStats" EntitySet="KickingStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassingStats_Players" Association="ESPNStatsModel.Store.FK_PassingStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="PassingStats" EntitySet="PassingStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Players_NFLTeams" Association="ESPNStatsModel.Store.FK_Players_NFLTeams">
+            <End Role="NFLTeams" EntitySet="NFLTeams" />
+            <End Role="Players" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PuntingStats_Players" Association="ESPNStatsModel.Store.FK_PuntingStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="PuntingStats" EntitySet="PuntingStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceivingStats_Players" Association="ESPNStatsModel.Store.FK_ReceivingStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="ReceivingStats" EntitySet="ReceivingStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnStats_Players" Association="ESPNStatsModel.Store.FK_ReturnStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="ReturnStats" EntitySet="ReturnStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RushingStats_Players" Association="ESPNStatsModel.Store.FK_RushingStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="RushingStats" EntitySet="RushingStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScoringStats_Players" Association="ESPNStatsModel.Store.FK_ScoringStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="ScoringStats" EntitySet="ScoringStats" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DefensiveStats">
+          <Key>
+            <PropertyRef Name="DefensiveStatsID" />
+          </Key>
+          <Property Name="DefensiveStatsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="Season" Type="int" />
+          <Property Name="Team" Type="nvarchar" MaxLength="5" />
+          <Property Name="GamesPlayed" Type="int" />
+          <Property Name="CombinedTackles" Type="int" />
+          <Property Name="TotalTackles" Type="int" />
+          <Property Name="AssistedTackles" Type="int" />
+          <Property Name="Sack" Type="float" />
+          <Property Name="FumblesForced" Type="int" />
+          <Property Name="FumblesRecovered" Type="int" />
+          <Property Name="FumbleReturnYards" Type="int" />
+          <Property Name="Interceptions" Type="int" />
+          <Property Name="IntReturnYards" Type="int" />
+          <Property Name="IntReturnYardLong" Type="int" />
+          <Property Name="IntTDs" Type="int" />
+          <Property Name="PassesDefended" Type="int" />
+          <Property Name="Stuffs" Type="int" />
+          <Property Name="StuffYards" Type="int" />
+          <Property Name="KicksBlocked" Type="int" />
+        </EntityType>
+        <EntityType Name="KickingStats">
+          <Key>
+            <PropertyRef Name="KickingStatsID" />
+          </Key>
+          <Property Name="KickingStatsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="int" />
+          <Property Name="Season" Type="int" />
+          <Property Name="Team" Type="nvarchar" MaxLength="5" />
+          <Property Name="GamesPlayed" Type="int" />
+          <Property Name="FGMade" Type="int" />
+          <Property Name="FGAtt" Type="int" />
+          <Property Name="FG19Yards" Type="int" />
+          <Property Name="FG29Yards" Type="int" />
+          <Property Name="FG39Yards" Type="int" />
+          <Property Name="FG49Yards" Type="int" />
+          <Property Name="FG50Plus" Type="int" />
+          <Property Name="Long" Type="int" />
+          <Property Name="XPM" Type="int" />
+          <Property Name="XPA" Type="int" />
+          <Property Name="Points" Type="int" />
+        </EntityType>
+        <EntityType Name="Logger">
+          <Key>
+            <PropertyRef Name="LoggerID" />
+          </Key>
+          <Property Name="LoggerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LogMessage" Type="nvarchar" MaxLength="500" />
+          <Property Name="Result" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NFLTeams">
+          <Key>
+            <PropertyRef Name="NFLTeamID" />
+          </Key>
+          <Property Name="NFLTeamID" Type="int" Nullable="false" />
+          <Property Name="TeamName" Type="nvarchar" MaxLength="50" />
+          <Property Name="TeamAbbrev" Type="nvarchar" MaxLength="10" />
+          <Property Name="TeamLogoPath" Type="nvarchar" MaxLength="38" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="PassingStats">
+          <Key>
+            <PropertyRef Name="PassingStatsID" />
+          </Key>
+          <Property Name="PassingStatsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="Season" Type="int" Nullable="false" />
+          <Property Name="Team" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="GamesPlayed" Type="int" Nullable="false" />
+          <Property Name="Completions" Type="int" Nullable="false" />
+          <Property Name="Attempts" Type="int" Nullable="false" />
+          <Property Name="Yards" Type="int" Nullable="false" />
+          <Property Name="Touchdowns" Type="int" Nullable="false" />
+          <Property Name="Long" Type="int" Nullable="false" />
+          <Property Name="Interceptions" Type="int" Nullable="false" />
+          <Property Name="Fumbles" Type="int" Nullable="false" />
+          <Property Name="QBRating" Type="float" />
+          <Property Name="PasserRating" Type="float" Nullable="false" />
+          <Property Name="TestAvg" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="PlayerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Team" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImageURL" Type="nvarchar" MaxLength="200" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="127" StoreGeneratedPattern="Computed" />
+          <Property Name="TeamID" Type="int" />
+          <Property Name="Position" Type="nvarchar" MaxLength="5" />
+          <Property Name="IsPlayer" Type="bit" />
+          <Property Name="Number" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="PuntingStats">
+          <Key>
+            <PropertyRef Name="PuntingStatsID" />
+          </Key>
+          <Property Name="PuntingStatsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="int" />
+          <Property Name="Season" Type="int" />
+          <Property Name="Team" Type="nvarchar" MaxLength="5" />
+          <Property Name="GamesPlayed" Type="int" />
+          <Property Name="Punts" Type="int" />
+          <Property Name="Long" Type="int" />
+          <Property Name="PuntYards" Type="int" />
+          <Property Name="BlockedPunts" Type="int" />
+          <Property Name="Touchbacks" Type="int" />
+          <Property Name="Inside20" Type="int" />
+        </EntityType>
+        <EntityType Name="ReceivingStats">
+          <Key>
+            <PropertyRef Name="ReceivingStatsID" />
+          </Key>
+          <Property Name="ReceivingStatsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="Season" Type="int" />
+          <Property Name="Team" Type="nvarchar" MaxLength="5" />
+          <Property Name="GamesPlayed" Type="int" />
+          <Property Name="Receptions" Type="int" />
+          <Property Name="Targets" Type="int" />
+          <Property Name="Yards" Type="int" />
+          <Property Name="Long" Type="int" />
+          <Property Name="Touchdowns" Type="int" />
+          <Property Name="FirstDowns" Type="int" />
+          <Property Name="Fumbles" Type="int" />
+          <Property Name="FumblesLost" Type="int" />
+        </EntityType>
+        <EntityType Name="ReturnStats">
+          <Key>
+            <PropertyRef Name="ReturnStatsID" />
+          </Key>
+          <Property Name="ReturnStatsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="int" />
+          <Property Name="Season" Type="int" />
+          <Property Name="Team" Type="nvarchar" MaxLength="5" />
+          <Property Name="GamesPlayed" Type="int" />
+          <Property Name="PuntReturnAttempts" Type="int" />
+          <Property Name="PuntReturnYards" Type="int" />
+          <Property Name="PuntReturnTDs" Type="int" />
+          <Property Name="PuntFairCatches" Type="int" />
+          <Property Name="PuntReturnLong" Type="int" />
+          <Property Name="KickReturnAttempts" Type="int" />
+          <Property Name="KickReturnYards" Type="int" />
+          <Property Name="KickReturnTDs" Type="int" />
+          <Property Name="KickFairCatches" Type="int" />
+          <Property Name="KickReturnLong" Type="int" />
+        </EntityType>
+        <EntityType Name="RushingStats">
+          <Key>
+            <PropertyRef Name="RushingStatsID" />
+          </Key>
+          <Property Name="RushingStatsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="Season" Type="int" Nullable="false" />
+          <Property Name="Team" Type="nvarchar" Nullable="false" MaxLength="5" />
+          <Property Name="GamesPlayed" Type="int" />
+          <Property Name="Attempts" Type="int" />
+          <Property Name="Yards" Type="int" />
+          <Property Name="Long" Type="int" />
+          <Property Name="Touchdowns" Type="int" />
+          <Property Name="FirstDowns" Type="int" />
+          <Property Name="Fumbles" Type="int" />
+          <Property Name="FumblesLost" Type="int" />
+        </EntityType>
+        <EntityType Name="ScoringStats">
+          <Key>
+            <PropertyRef Name="ScoringStatsID" />
+          </Key>
+          <Property Name="ScoringStatsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="Season" Type="int" />
+          <Property Name="Team" Type="nvarchar" MaxLength="5" />
+          <Property Name="GamesPlayed" Type="int" />
+          <Property Name="PassTDs" Type="int" />
+          <Property Name="RushTDs" Type="int" />
+          <Property Name="RecTDs" Type="int" />
+          <Property Name="ReturnTDs" Type="int" />
+          <Property Name="TotalTDs" Type="int" />
+          <Property Name="PAT2" Type="int" />
+          <Property Name="PAT" Type="int" />
+          <Property Name="FG" Type="int" />
+          <Property Name="TotalPoints" Type="int" />
+        </EntityType>
+        <EntityType Name="TweetIDs">
+          <Key>
+            <PropertyRef Name="TweetID" />
+          </Key>
+          <Property Name="TweetID" Type="bigint" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DefensiveStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Store.Players" Multiplicity="1" />
+          <End Role="DefensiveStats" Type="ESPNStatsModel.Store.DefensiveStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="DefensiveStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KickingStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Store.Players" Multiplicity="0..1" />
+          <End Role="KickingStats" Type="ESPNStatsModel.Store.KickingStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="KickingStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassingStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Store.Players" Multiplicity="1" />
+          <End Role="PassingStats" Type="ESPNStatsModel.Store.PassingStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="PassingStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Players_NFLTeams">
+          <End Role="NFLTeams" Type="ESPNStatsModel.Store.NFLTeams" Multiplicity="0..1" />
+          <End Role="Players" Type="ESPNStatsModel.Store.Players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NFLTeams">
+              <PropertyRef Name="NFLTeamID" />
+            </Principal>
+            <Dependent Role="Players">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PuntingStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Store.Players" Multiplicity="0..1" />
+          <End Role="PuntingStats" Type="ESPNStatsModel.Store.PuntingStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="PuntingStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceivingStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Store.Players" Multiplicity="1" />
+          <End Role="ReceivingStats" Type="ESPNStatsModel.Store.ReceivingStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="ReceivingStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Store.Players" Multiplicity="0..1" />
+          <End Role="ReturnStats" Type="ESPNStatsModel.Store.ReturnStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="ReturnStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RushingStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Store.Players" Multiplicity="1" />
+          <End Role="RushingStats" Type="ESPNStatsModel.Store.RushingStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="RushingStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScoringStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Store.Players" Multiplicity="1" />
+          <End Role="ScoringStats" Type="ESPNStatsModel.Store.ScoringStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="ScoringStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ESPNStatsModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ESPNStatsEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="DefensiveStats" EntityType="ESPNStatsModel.DefensiveStats" />
+          <EntitySet Name="KickingStats" EntityType="ESPNStatsModel.KickingStats" />
+          <EntitySet Name="Logger" EntityType="ESPNStatsModel.Logger" />
+          <EntitySet Name="NFLTeams" EntityType="ESPNStatsModel.NFLTeams" />
+          <EntitySet Name="PassingStats" EntityType="ESPNStatsModel.PassingStats" />
+          <EntitySet Name="Players" EntityType="ESPNStatsModel.Players" />
+          <EntitySet Name="PuntingStats" EntityType="ESPNStatsModel.PuntingStats" />
+          <EntitySet Name="ReceivingStats" EntityType="ESPNStatsModel.ReceivingStats" />
+          <EntitySet Name="ReturnStats" EntityType="ESPNStatsModel.ReturnStats" />
+          <EntitySet Name="RushingStats" EntityType="ESPNStatsModel.RushingStats" />
+          <EntitySet Name="ScoringStats" EntityType="ESPNStatsModel.ScoringStats" />
+          <EntitySet Name="TweetIDs" EntityType="ESPNStatsModel.TweetIDs" />
+          <AssociationSet Name="FK_DefensiveStats_Players" Association="ESPNStatsModel.FK_DefensiveStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="DefensiveStats" EntitySet="DefensiveStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KickingStats_Players" Association="ESPNStatsModel.FK_KickingStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="KickingStats" EntitySet="KickingStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Players_NFLTeams" Association="ESPNStatsModel.FK_Players_NFLTeams">
+            <End Role="NFLTeams" EntitySet="NFLTeams" />
+            <End Role="Players" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassingStats_Players" Association="ESPNStatsModel.FK_PassingStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="PassingStats" EntitySet="PassingStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PuntingStats_Players" Association="ESPNStatsModel.FK_PuntingStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="PuntingStats" EntitySet="PuntingStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceivingStats_Players" Association="ESPNStatsModel.FK_ReceivingStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="ReceivingStats" EntitySet="ReceivingStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnStats_Players" Association="ESPNStatsModel.FK_ReturnStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="ReturnStats" EntitySet="ReturnStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RushingStats_Players" Association="ESPNStatsModel.FK_RushingStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="RushingStats" EntitySet="RushingStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScoringStats_Players" Association="ESPNStatsModel.FK_ScoringStats_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="ScoringStats" EntitySet="ScoringStats" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DefensiveStats">
+          <Key>
+            <PropertyRef Name="DefensiveStatsID" />
+          </Key>
+          <Property Name="DefensiveStatsID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="Season" Type="Int32" />
+          <Property Name="Team" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="GamesPlayed" Type="Int32" />
+          <Property Name="CombinedTackles" Type="Int32" />
+          <Property Name="TotalTackles" Type="Int32" />
+          <Property Name="AssistedTackles" Type="Int32" />
+          <Property Name="Sack" Type="Double" />
+          <Property Name="FumblesForced" Type="Int32" />
+          <Property Name="FumblesRecovered" Type="Int32" />
+          <Property Name="FumbleReturnYards" Type="Int32" />
+          <Property Name="Interceptions" Type="Int32" />
+          <Property Name="IntReturnYards" Type="Int32" />
+          <Property Name="IntReturnYardLong" Type="Int32" />
+          <Property Name="IntTDs" Type="Int32" />
+          <Property Name="PassesDefended" Type="Int32" />
+          <Property Name="Stuffs" Type="Int32" />
+          <Property Name="StuffYards" Type="Int32" />
+          <Property Name="KicksBlocked" Type="Int32" />
+          <NavigationProperty Name="Players" Relationship="ESPNStatsModel.FK_DefensiveStats_Players" FromRole="DefensiveStats" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="KickingStats">
+          <Key>
+            <PropertyRef Name="KickingStatsID" />
+          </Key>
+          <Property Name="KickingStatsID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="Int32" />
+          <Property Name="Season" Type="Int32" />
+          <Property Name="Team" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="GamesPlayed" Type="Int32" />
+          <Property Name="FGMade" Type="Int32" />
+          <Property Name="FGAtt" Type="Int32" />
+          <Property Name="FG19Yards" Type="Int32" />
+          <Property Name="FG29Yards" Type="Int32" />
+          <Property Name="FG39Yards" Type="Int32" />
+          <Property Name="FG49Yards" Type="Int32" />
+          <Property Name="FG50Plus" Type="Int32" />
+          <Property Name="Long" Type="Int32" />
+          <Property Name="XPM" Type="Int32" />
+          <Property Name="XPA" Type="Int32" />
+          <Property Name="Points" Type="Int32" />
+          <NavigationProperty Name="Players" Relationship="ESPNStatsModel.FK_KickingStats_Players" FromRole="KickingStats" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="Logger">
+          <Key>
+            <PropertyRef Name="LoggerID" />
+          </Key>
+          <Property Name="LoggerID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="LogMessage" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="Result" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="NFLTeams">
+          <Key>
+            <PropertyRef Name="NFLTeamID" />
+          </Key>
+          <Property Name="NFLTeamID" Type="Int32" Nullable="false" />
+          <Property Name="TeamName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TeamAbbrev" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="TeamLogoPath" Type="String" MaxLength="38" Unicode="true" FixedLength="false" p1:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Players" Relationship="ESPNStatsModel.FK_Players_NFLTeams" FromRole="NFLTeams" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="PassingStats">
+          <Key>
+            <PropertyRef Name="PassingStatsID" />
+          </Key>
+          <Property Name="PassingStatsID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="Season" Type="Int32" Nullable="false" />
+          <Property Name="Team" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="GamesPlayed" Type="Int32" Nullable="false" />
+          <Property Name="Completions" Type="Int32" Nullable="false" />
+          <Property Name="Attempts" Type="Int32" Nullable="false" />
+          <Property Name="Yards" Type="Int32" Nullable="false" />
+          <Property Name="Touchdowns" Type="Int32" Nullable="false" />
+          <Property Name="Long" Type="Int32" Nullable="false" />
+          <Property Name="Interceptions" Type="Int32" Nullable="false" />
+          <Property Name="Fumbles" Type="Int32" Nullable="false" />
+          <Property Name="QBRating" Type="Double" />
+          <Property Name="PasserRating" Type="Double" Nullable="false" />
+          <Property Name="TestAvg" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Players" Relationship="ESPNStatsModel.FK_PassingStats_Players" FromRole="PassingStats" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="PlayerName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Team" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ImageURL" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="127" Unicode="true" FixedLength="false" p1:StoreGeneratedPattern="Computed" />
+          <Property Name="TeamID" Type="Int32" />
+          <Property Name="Position" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="IsPlayer" Type="Boolean" />
+          <Property Name="Number" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="DefensiveStats" Relationship="ESPNStatsModel.FK_DefensiveStats_Players" FromRole="Players" ToRole="DefensiveStats" />
+          <NavigationProperty Name="KickingStats" Relationship="ESPNStatsModel.FK_KickingStats_Players" FromRole="Players" ToRole="KickingStats" />
+          <NavigationProperty Name="NFLTeams" Relationship="ESPNStatsModel.FK_Players_NFLTeams" FromRole="Players" ToRole="NFLTeams" />
+          <NavigationProperty Name="PassingStats" Relationship="ESPNStatsModel.FK_PassingStats_Players" FromRole="Players" ToRole="PassingStats" />
+          <NavigationProperty Name="PuntingStats" Relationship="ESPNStatsModel.FK_PuntingStats_Players" FromRole="Players" ToRole="PuntingStats" />
+          <NavigationProperty Name="ReceivingStats" Relationship="ESPNStatsModel.FK_ReceivingStats_Players" FromRole="Players" ToRole="ReceivingStats" />
+          <NavigationProperty Name="ReturnStats" Relationship="ESPNStatsModel.FK_ReturnStats_Players" FromRole="Players" ToRole="ReturnStats" />
+          <NavigationProperty Name="RushingStats" Relationship="ESPNStatsModel.FK_RushingStats_Players" FromRole="Players" ToRole="RushingStats" />
+          <NavigationProperty Name="ScoringStats" Relationship="ESPNStatsModel.FK_ScoringStats_Players" FromRole="Players" ToRole="ScoringStats" />
+        </EntityType>
+        <EntityType Name="PuntingStats">
+          <Key>
+            <PropertyRef Name="PuntingStatsID" />
+          </Key>
+          <Property Name="PuntingStatsID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="Int32" />
+          <Property Name="Season" Type="Int32" />
+          <Property Name="Team" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="GamesPlayed" Type="Int32" />
+          <Property Name="Punts" Type="Int32" />
+          <Property Name="Long" Type="Int32" />
+          <Property Name="PuntYards" Type="Int32" />
+          <Property Name="BlockedPunts" Type="Int32" />
+          <Property Name="Touchbacks" Type="Int32" />
+          <Property Name="Inside20" Type="Int32" />
+          <NavigationProperty Name="Players" Relationship="ESPNStatsModel.FK_PuntingStats_Players" FromRole="PuntingStats" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="ReceivingStats">
+          <Key>
+            <PropertyRef Name="ReceivingStatsID" />
+          </Key>
+          <Property Name="ReceivingStatsID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="Season" Type="Int32" />
+          <Property Name="Team" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="GamesPlayed" Type="Int32" />
+          <Property Name="Receptions" Type="Int32" />
+          <Property Name="Targets" Type="Int32" />
+          <Property Name="Yards" Type="Int32" />
+          <Property Name="Long" Type="Int32" />
+          <Property Name="Touchdowns" Type="Int32" />
+          <Property Name="FirstDowns" Type="Int32" />
+          <Property Name="Fumbles" Type="Int32" />
+          <Property Name="FumblesLost" Type="Int32" />
+          <NavigationProperty Name="Players" Relationship="ESPNStatsModel.FK_ReceivingStats_Players" FromRole="ReceivingStats" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="ReturnStats">
+          <Key>
+            <PropertyRef Name="ReturnStatsID" />
+          </Key>
+          <Property Name="ReturnStatsID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="Int32" />
+          <Property Name="Season" Type="Int32" />
+          <Property Name="Team" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="GamesPlayed" Type="Int32" />
+          <Property Name="PuntReturnAttempts" Type="Int32" />
+          <Property Name="PuntReturnYards" Type="Int32" />
+          <Property Name="PuntReturnTDs" Type="Int32" />
+          <Property Name="PuntFairCatches" Type="Int32" />
+          <Property Name="PuntReturnLong" Type="Int32" />
+          <Property Name="KickReturnAttempts" Type="Int32" />
+          <Property Name="KickReturnYards" Type="Int32" />
+          <Property Name="KickReturnTDs" Type="Int32" />
+          <Property Name="KickFairCatches" Type="Int32" />
+          <Property Name="KickReturnLong" Type="Int32" />
+          <NavigationProperty Name="Players" Relationship="ESPNStatsModel.FK_ReturnStats_Players" FromRole="ReturnStats" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="RushingStats">
+          <Key>
+            <PropertyRef Name="RushingStatsID" />
+          </Key>
+          <Property Name="RushingStatsID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="Season" Type="Int32" Nullable="false" />
+          <Property Name="Team" Type="String" Nullable="false" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="GamesPlayed" Type="Int32" />
+          <Property Name="Attempts" Type="Int32" />
+          <Property Name="Yards" Type="Int32" />
+          <Property Name="Long" Type="Int32" />
+          <Property Name="Touchdowns" Type="Int32" />
+          <Property Name="FirstDowns" Type="Int32" />
+          <Property Name="Fumbles" Type="Int32" />
+          <Property Name="FumblesLost" Type="Int32" />
+          <NavigationProperty Name="Players" Relationship="ESPNStatsModel.FK_RushingStats_Players" FromRole="RushingStats" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="ScoringStats">
+          <Key>
+            <PropertyRef Name="ScoringStatsID" />
+          </Key>
+          <Property Name="ScoringStatsID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="Season" Type="Int32" />
+          <Property Name="Team" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="GamesPlayed" Type="Int32" />
+          <Property Name="PassTDs" Type="Int32" />
+          <Property Name="RushTDs" Type="Int32" />
+          <Property Name="RecTDs" Type="Int32" />
+          <Property Name="ReturnTDs" Type="Int32" />
+          <Property Name="TotalTDs" Type="Int32" />
+          <Property Name="PAT2" Type="Int32" />
+          <Property Name="PAT" Type="Int32" />
+          <Property Name="FG" Type="Int32" />
+          <Property Name="TotalPoints" Type="Int32" />
+          <NavigationProperty Name="Players" Relationship="ESPNStatsModel.FK_ScoringStats_Players" FromRole="ScoringStats" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="TweetIDs">
+          <Key>
+            <PropertyRef Name="TweetID" />
+          </Key>
+          <Property Name="TweetID" Type="Int64" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_DefensiveStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Players" Multiplicity="1" />
+          <End Role="DefensiveStats" Type="ESPNStatsModel.DefensiveStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="DefensiveStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KickingStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Players" Multiplicity="0..1" />
+          <End Role="KickingStats" Type="ESPNStatsModel.KickingStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="KickingStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Players_NFLTeams">
+          <End Role="NFLTeams" Type="ESPNStatsModel.NFLTeams" Multiplicity="0..1" />
+          <End Role="Players" Type="ESPNStatsModel.Players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NFLTeams">
+              <PropertyRef Name="NFLTeamID" />
+            </Principal>
+            <Dependent Role="Players">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassingStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Players" Multiplicity="1" />
+          <End Role="PassingStats" Type="ESPNStatsModel.PassingStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="PassingStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PuntingStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Players" Multiplicity="0..1" />
+          <End Role="PuntingStats" Type="ESPNStatsModel.PuntingStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="PuntingStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceivingStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Players" Multiplicity="1" />
+          <End Role="ReceivingStats" Type="ESPNStatsModel.ReceivingStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="ReceivingStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Players" Multiplicity="0..1" />
+          <End Role="ReturnStats" Type="ESPNStatsModel.ReturnStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="ReturnStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RushingStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Players" Multiplicity="1" />
+          <End Role="RushingStats" Type="ESPNStatsModel.RushingStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="RushingStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScoringStats_Players">
+          <End Role="Players" Type="ESPNStatsModel.Players" Multiplicity="1" />
+          <End Role="ScoringStats" Type="ESPNStatsModel.ScoringStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="ScoringStats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ESPNStatsModelStoreContainer" CdmEntityContainer="ESPNStatsEntities">
+          <EntitySetMapping Name="DefensiveStats">
+            <EntityTypeMapping TypeName="ESPNStatsModel.DefensiveStats">
+              <MappingFragment StoreEntitySet="DefensiveStats">
+                <ScalarProperty Name="DefensiveStatsID" ColumnName="DefensiveStatsID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="GamesPlayed" ColumnName="GamesPlayed" />
+                <ScalarProperty Name="CombinedTackles" ColumnName="CombinedTackles" />
+                <ScalarProperty Name="TotalTackles" ColumnName="TotalTackles" />
+                <ScalarProperty Name="AssistedTackles" ColumnName="AssistedTackles" />
+                <ScalarProperty Name="Sack" ColumnName="Sack" />
+                <ScalarProperty Name="FumblesForced" ColumnName="FumblesForced" />
+                <ScalarProperty Name="FumblesRecovered" ColumnName="FumblesRecovered" />
+                <ScalarProperty Name="FumbleReturnYards" ColumnName="FumbleReturnYards" />
+                <ScalarProperty Name="Interceptions" ColumnName="Interceptions" />
+                <ScalarProperty Name="IntReturnYards" ColumnName="IntReturnYards" />
+                <ScalarProperty Name="IntReturnYardLong" ColumnName="IntReturnYardLong" />
+                <ScalarProperty Name="IntTDs" ColumnName="IntTDs" />
+                <ScalarProperty Name="PassesDefended" ColumnName="PassesDefended" />
+                <ScalarProperty Name="Stuffs" ColumnName="Stuffs" />
+                <ScalarProperty Name="StuffYards" ColumnName="StuffYards" />
+                <ScalarProperty Name="KicksBlocked" ColumnName="KicksBlocked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KickingStats">
+            <EntityTypeMapping TypeName="ESPNStatsModel.KickingStats">
+              <MappingFragment StoreEntitySet="KickingStats">
+                <ScalarProperty Name="KickingStatsID" ColumnName="KickingStatsID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="GamesPlayed" ColumnName="GamesPlayed" />
+                <ScalarProperty Name="FGMade" ColumnName="FGMade" />
+                <ScalarProperty Name="FGAtt" ColumnName="FGAtt" />
+                <ScalarProperty Name="FG19Yards" ColumnName="FG19Yards" />
+                <ScalarProperty Name="FG29Yards" ColumnName="FG29Yards" />
+                <ScalarProperty Name="FG39Yards" ColumnName="FG39Yards" />
+                <ScalarProperty Name="FG49Yards" ColumnName="FG49Yards" />
+                <ScalarProperty Name="FG50Plus" ColumnName="FG50Plus" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="XPM" ColumnName="XPM" />
+                <ScalarProperty Name="XPA" ColumnName="XPA" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logger">
+            <EntityTypeMapping TypeName="ESPNStatsModel.Logger">
+              <MappingFragment StoreEntitySet="Logger">
+                <ScalarProperty Name="LoggerID" ColumnName="LoggerID" />
+                <ScalarProperty Name="LogMessage" ColumnName="LogMessage" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NFLTeams">
+            <EntityTypeMapping TypeName="ESPNStatsModel.NFLTeams">
+              <MappingFragment StoreEntitySet="NFLTeams">
+                <ScalarProperty Name="NFLTeamID" ColumnName="NFLTeamID" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="TeamAbbrev" ColumnName="TeamAbbrev" />
+                <ScalarProperty Name="TeamLogoPath" ColumnName="TeamLogoPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PassingStats">
+            <EntityTypeMapping TypeName="ESPNStatsModel.PassingStats">
+              <MappingFragment StoreEntitySet="PassingStats">
+                <ScalarProperty Name="PassingStatsID" ColumnName="PassingStatsID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="GamesPlayed" ColumnName="GamesPlayed" />
+                <ScalarProperty Name="Completions" ColumnName="Completions" />
+                <ScalarProperty Name="Attempts" ColumnName="Attempts" />
+                <ScalarProperty Name="Yards" ColumnName="Yards" />
+                <ScalarProperty Name="Touchdowns" ColumnName="Touchdowns" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="Interceptions" ColumnName="Interceptions" />
+                <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
+                <ScalarProperty Name="QBRating" ColumnName="QBRating" />
+                <ScalarProperty Name="PasserRating" ColumnName="PasserRating" />
+                <ScalarProperty Name="TestAvg" ColumnName="TestAvg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="ESPNStatsModel.Players">
+              <MappingFragment StoreEntitySet="Players">
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="IsPlayer" ColumnName="IsPlayer" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PuntingStats">
+            <EntityTypeMapping TypeName="ESPNStatsModel.PuntingStats">
+              <MappingFragment StoreEntitySet="PuntingStats">
+                <ScalarProperty Name="PuntingStatsID" ColumnName="PuntingStatsID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="GamesPlayed" ColumnName="GamesPlayed" />
+                <ScalarProperty Name="Punts" ColumnName="Punts" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="PuntYards" ColumnName="PuntYards" />
+                <ScalarProperty Name="BlockedPunts" ColumnName="BlockedPunts" />
+                <ScalarProperty Name="Touchbacks" ColumnName="Touchbacks" />
+                <ScalarProperty Name="Inside20" ColumnName="Inside20" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceivingStats">
+            <EntityTypeMapping TypeName="ESPNStatsModel.ReceivingStats">
+              <MappingFragment StoreEntitySet="ReceivingStats">
+                <ScalarProperty Name="ReceivingStatsID" ColumnName="ReceivingStatsID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="GamesPlayed" ColumnName="GamesPlayed" />
+                <ScalarProperty Name="Receptions" ColumnName="Receptions" />
+                <ScalarProperty Name="Targets" ColumnName="Targets" />
+                <ScalarProperty Name="Yards" ColumnName="Yards" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="Touchdowns" ColumnName="Touchdowns" />
+                <ScalarProperty Name="FirstDowns" ColumnName="FirstDowns" />
+                <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
+                <ScalarProperty Name="FumblesLost" ColumnName="FumblesLost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReturnStats">
+            <EntityTypeMapping TypeName="ESPNStatsModel.ReturnStats">
+              <MappingFragment StoreEntitySet="ReturnStats">
+                <ScalarProperty Name="ReturnStatsID" ColumnName="ReturnStatsID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="GamesPlayed" ColumnName="GamesPlayed" />
+                <ScalarProperty Name="PuntReturnAttempts" ColumnName="PuntReturnAttempts" />
+                <ScalarProperty Name="PuntReturnYards" ColumnName="PuntReturnYards" />
+                <ScalarProperty Name="PuntReturnTDs" ColumnName="PuntReturnTDs" />
+                <ScalarProperty Name="PuntFairCatches" ColumnName="PuntFairCatches" />
+                <ScalarProperty Name="PuntReturnLong" ColumnName="PuntReturnLong" />
+                <ScalarProperty Name="KickReturnAttempts" ColumnName="KickReturnAttempts" />
+                <ScalarProperty Name="KickReturnYards" ColumnName="KickReturnYards" />
+                <ScalarProperty Name="KickReturnTDs" ColumnName="KickReturnTDs" />
+                <ScalarProperty Name="KickFairCatches" ColumnName="KickFairCatches" />
+                <ScalarProperty Name="KickReturnLong" ColumnName="KickReturnLong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RushingStats">
+            <EntityTypeMapping TypeName="ESPNStatsModel.RushingStats">
+              <MappingFragment StoreEntitySet="RushingStats">
+                <ScalarProperty Name="RushingStatsID" ColumnName="RushingStatsID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="GamesPlayed" ColumnName="GamesPlayed" />
+                <ScalarProperty Name="Attempts" ColumnName="Attempts" />
+                <ScalarProperty Name="Yards" ColumnName="Yards" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="Touchdowns" ColumnName="Touchdowns" />
+                <ScalarProperty Name="FirstDowns" ColumnName="FirstDowns" />
+                <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
+                <ScalarProperty Name="FumblesLost" ColumnName="FumblesLost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScoringStats">
+            <EntityTypeMapping TypeName="ESPNStatsModel.ScoringStats">
+              <MappingFragment StoreEntitySet="ScoringStats">
+                <ScalarProperty Name="ScoringStatsID" ColumnName="ScoringStatsID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="GamesPlayed" ColumnName="GamesPlayed" />
+                <ScalarProperty Name="PassTDs" ColumnName="PassTDs" />
+                <ScalarProperty Name="RushTDs" ColumnName="RushTDs" />
+                <ScalarProperty Name="RecTDs" ColumnName="RecTDs" />
+                <ScalarProperty Name="ReturnTDs" ColumnName="ReturnTDs" />
+                <ScalarProperty Name="TotalTDs" ColumnName="TotalTDs" />
+                <ScalarProperty Name="PAT2" ColumnName="PAT2" />
+                <ScalarProperty Name="PAT" ColumnName="PAT" />
+                <ScalarProperty Name="FG" ColumnName="FG" />
+                <ScalarProperty Name="TotalPoints" ColumnName="TotalPoints" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TweetIDs">
+            <EntityTypeMapping TypeName="ESPNStatsModel.TweetIDs">
+              <MappingFragment StoreEntitySet="TweetIDs">
+                <ScalarProperty Name="TweetID" ColumnName="TweetID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

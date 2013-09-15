@@ -1,0 +1,30 @@
+Options for MachoManFF bot
+Tweets limited to 140 chars
+-Come up with decent format that saves chars
+-if limit is met, send another tweet
+Need unique ID on a tweet
+-take datetime and encode it?
+-timestamp it?
+
+stat type-
+passing, rushing etc.  
+-Need to be able to detect all perms of each one (i.e. passing, pssing, pass, assing, pasing)
+-create dictionary values with each perm as values, stattypeid as key
+-if no stat is provided, stat specific to that position is given (ex. QB is passing, RB rushing, WR receiving, etc.)
+-don't offer stat specific information. each stattype has a fixed set of stats provided (ex. Passing - pass yards, attempts, completions, rating, td.)
+
+player-
+-accept team abbrev and number (NEED TO KEEP PLAYER NUMBERS UP TO DATE)
+-GB04 vs GB4 - regex to find this.  
+-Dictionary with different abbreviations (ie. MN vs Min) with key being actual team id
+
+year-
+-if no year provided, return career stats
+-if multiple years provided, split up and return tweets for each year - loop based on years provided
+-#2008 vs #08? either one
+
+TO DOs with DATA
+-Position
+-number
+-Both are contained in the first instance of the "First" Class.  For current players, both number and position are in this first LI. For retired players, just position.
+
