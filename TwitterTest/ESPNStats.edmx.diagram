@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="823c961b047548b492189cf4cedc9979" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="ESPNStatsModel.DefensiveStats" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.KickingStats" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.Logger" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.NFLTeams" Width="1.5" PointX="0.75" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.PassingStats" Width="1.5" PointX="5.25" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.Players" Width="1.5" PointX="3" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.PuntingStats" Width="1.5" PointX="5.25" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.ReceivingStats" Width="1.5" PointX="5.25" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.ReturnStats" Width="1.5" PointX="5.25" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.RushingStats" Width="1.5" PointX="5.25" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.ScoringStats" Width="1.5" PointX="5.25" PointY="36" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESPNStatsModel.TweetIDs" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="ESPNStatsModel.FK_DefensiveStats_Players" ManuallyRouted="false" />
+        <AssociationConnector Association="ESPNStatsModel.FK_KickingStats_Players" ManuallyRouted="false" />
+        <AssociationConnector Association="ESPNStatsModel.FK_Players_NFLTeams" ManuallyRouted="false" />
+        <AssociationConnector Association="ESPNStatsModel.FK_PassingStats_Players" ManuallyRouted="false" />
+        <AssociationConnector Association="ESPNStatsModel.FK_PuntingStats_Players" ManuallyRouted="false" />
+        <AssociationConnector Association="ESPNStatsModel.FK_ReceivingStats_Players" ManuallyRouted="false" />
+        <AssociationConnector Association="ESPNStatsModel.FK_ReturnStats_Players" ManuallyRouted="false" />
+        <AssociationConnector Association="ESPNStatsModel.FK_RushingStats_Players" ManuallyRouted="false" />
+        <AssociationConnector Association="ESPNStatsModel.FK_ScoringStats_Players" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
