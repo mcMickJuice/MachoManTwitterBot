@@ -5,107 +5,93 @@ using System.Text;
 using System.Threading.Tasks;
 using LinqToTwitter;
 using System.Data.Entity;
-using TwitterTest.Objects;
+using StatsTwitterBot.Objects;
+using NLog;
 
-namespace TwitterTest.Classes
+namespace StatsTwitterBot.Classes
 {
     class TwitterAction
     {
-        string UserScreenName { get; set; }
-        TwitterAuthorizer tAuth = new TwitterAuthorizer();
-        ESPNStatsEntities dbcontext = new ESPNStatsEntities();
+        private PinAuthorizer _pinAuth;
+        public bool IsAuthorized { get; private set; }
+        protected static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public void TweetSomething(string tweet, string statusid)
+        public void AuthorizeTwitterAction()
         {
+            var tAuth = new TwitterAuthorizer(); 
+
             try
             {
-                var auth = tAuth.getPin();
-                if (!auth.IsAuthorized)
+                _pinAuth = tAuth.getPin();
+
+                if (!_pinAuth.IsAuthorized)
                 {
-                    auth.Authorize();
+                    _pinAuth.Authorize();
                 }
 
-                using (TwitterContext twitContext = new TwitterContext(auth))
-                {
-                    twitContext.UpdateStatus(tweet);
-
-                    Logger log = Log.LoggerCtr(String.Format("Successful Tweet of the following message - \n{0}", tweet), "Success");
-
-                    dbcontext.Logger.Add(log);
-                    dbcontext.SaveChanges();
-                }
+                IsAuthorized = true;
             }
             catch (Exception e)
             {
-                Logger log = Log.LoggerCtr(String.Format("Tweet failed - {0}. Here's the tweet - \n{1}",e.Message, tweet),"Error");
-
-                dbcontext.Logger.Add(log);
-                dbcontext.SaveChanges();
+                logger.Error("Error in AuthorizeTwitterAction", e);
+                IsAuthorized = false;
             }
+        }
+
+        public void TweetSomething(string tweet)
+        {
+            if (IsAuthorized)
+                {
+                    using (TwitterContext twitContext = new TwitterContext(_pinAuth))
+                    {
+                        try
+                        {
+                            twitContext.UpdateStatus(tweet);
+                            logger.Info(String.Format("Tweeted {0}",tweet));
+                        }
+                        catch(Exception e)
+                        {
+                            logger.Error(String.Format("Error tweeting message {0}",tweet),e);
+                        }
+                        
+                    }
+                }
         }
 
         public void SendDM(string dm, string userscreenname)
         {
-            try
+            if (IsAuthorized)
             {
-                var auth = tAuth.getPin();
-                if (!auth.IsAuthorized)
+                using (TwitterContext twitContext = new TwitterContext(_pinAuth))
                 {
-                    auth.Authorize();
+                    try
+                    {
+                        twitContext.NewDirectMessage(userscreenname, dm);
+                        logger.Info("Sent DM {0} to user {1}", dm, userscreenname);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Error("Error sending DM {0} to user {1}", dm, userscreenname);
+                    }
+                    
                 }
-
-                using (TwitterContext twitContext = new TwitterContext(auth))
-                {
-                    twitContext.NewDirectMessage(userscreenname, dm);
-                    Logger log = Log.LoggerCtr(String.Format("Success sent DM to {0} with message: \n{1}", userscreenname, dm), "Success");
-
-                    dbcontext.Logger.Add(log);
-                    dbcontext.SaveChanges();
-                }
-            }
-            catch (Exception e)
-            {
-                Logger log = Log.LoggerCtr(String.Format("Error sending DM - \n{0}", e.Message), "Error");
-
-                dbcontext.Logger.Add(log);
-                dbcontext.SaveChanges();
             }
         }
 
         public List<Status> GetMentionedTweets(ulong lasttweetid)
         {
-            try
+            if (IsAuthorized)
             {
-                var auth = tAuth.getPin();
-                if (!auth.IsAuthorized)
+                using (TwitterContext twitContext = new TwitterContext(_pinAuth))
                 {
-                    auth.Authorize();
-                }
+                    var tweets = twitContext.Status.Where(x => x.Type == StatusType.Mentions
+                                                            && x.SinceID == lasttweetid
+                                                            && x.Entities.HashTagEntities.Count > 0);
 
-                using (TwitterContext twitContext = new TwitterContext(auth))
-                {
-                    var tweets = (from tweet in twitContext.Status
-                                 where tweet.Type == StatusType.Mentions && tweet.SinceID == lasttweetid
-                                 select tweet).Where(t=>t.Entities.HashTagEntities.Count > 0); //filters out tweets that have no hashtags
-
-                    if (tweets.Count() == 0)
-                    {
-                        return null;
-                    }
-
-                    return tweets.ToList();
-
+                    return tweets == null ? null : tweets.ToList();
                 }
             }
-            catch (Exception e)
-            {
-                Logger log = Log.LoggerCtr(String.Format("There was an error querying Twitter - {0}", e.Message), "Error");
-
-                dbcontext.Logger.Add(log);
-                dbcontext.SaveChanges();
-
-                return null;
-            }
+            else return null;
         }
     }
 }

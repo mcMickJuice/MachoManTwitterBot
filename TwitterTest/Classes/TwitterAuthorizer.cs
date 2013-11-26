@@ -10,7 +10,7 @@ using LinqToTwitter.Security;
 using LinqToTwitter.Serialization;
 using System.Diagnostics;
 
-namespace TwitterTest.Classes
+namespace StatsTwitterBot.Classes
 {
     class TwitterAuthorizer
     {

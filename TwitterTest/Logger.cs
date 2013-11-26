@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TwitterTest
+namespace StatsTwitterBot
 {
     using System;
     using System.Collections.Generic;

@@ -8,26 +8,17 @@ using System.Threading.Tasks;
 using LinqToTwitter.Common;
 using LinqToTwitter;
 using System.Configuration;
-using TwitterTest.Classes;
-using TwitterTest.Objects;
+using StatsTwitterBot.Classes;
+using StatsTwitterBot.Objects;
 
-namespace TwitterTest
+namespace StatsTwitterBot
 {
     class Program
     {
         static void Main(string[] args)
         {
-            TwitterBot tBot = new TwitterBot();
-            int tweetsTweeted = 0;
-            //entrypoint
-            while (true)
-            {
-                tweetsTweeted = tBot.checkTwitter();
-                Console.WriteLine("Checked Twitter - tweeted out {0} tweets",tweetsTweeted);
-                System.Threading.Thread.Sleep(60000);
-            }
-            //Console.WriteLine("Program Done");
-            //Console.ReadKey();
+            var tBot = new TwitterBot();
+            tBot.Run();
         }
     }
 }
