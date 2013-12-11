@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StatsTwitterBot.Objects;
 
 namespace StatsTwitterBot.Classes
 {
-    internal class DataAccessor
+    public class DataAccessor
     {
         private ESPNStatsEntities _context;
 
@@ -22,11 +19,13 @@ namespace StatsTwitterBot.Classes
             return _context.TweetIDs.Max(ids => ids.TweetID);
         }
 
-        public void InsertTweetID(long tweetid)
+        public void InsertTweetID(long tweetid, string incomingtweet, string outgoingtweet)
         {
             var tweetids = new TweetIDs();
             tweetids.TweetID = tweetid;
             tweetids.CreatedDate = DateTime.Now;
+            tweetids.IncomingTweet = incomingtweet;
+            tweetids.OutgoingTweet = outgoingtweet;
             _context.TweetIDs.Add(tweetids);
             _context.SaveChanges();
         }
@@ -44,6 +43,25 @@ namespace StatsTwitterBot.Classes
             {
                 return null;
             }
+        }
+
+        public List<int> GetIdByName(string name)
+        {
+            var query = _context.Players.Where(player => player.PlayerName.Replace(" ", "") == name)
+                                        .Select(player => player.PlayerID)
+                                        .ToList();
+
+            return query;
+        }
+
+        public int GetIdByNumberAndTeam(string teamabbrev, string number)
+        {
+            var query = _context.Players.Where(player => player.NFLTeams.TeamAbbrev.ToUpper() == teamabbrev.ToUpper() 
+                                                               && player.Number == number)
+                                        .Select(player => player.PlayerID)
+                                        .FirstOrDefault();
+
+            return query;
         }
 
         public string GetStatType(string number, string teamabbrev)
@@ -67,8 +85,36 @@ namespace StatsTwitterBot.Classes
             }
             else
             {
-                throw new ApplicationException(String.Format("Player was not found with Numbrer: {0} and Team Abbrev: {1}",number,teamabbrev));
+                throw new ApplicationException(String.Format("Player was not found with Number: {0} and Team Abbrev: {1}",number,teamabbrev));
             }
+        }
+
+        public string GetStatType(int playerid)
+        {
+            string[] defensivePositions = new string[] { "CB", "DB", "DE", "DL", "DT", "LB", "NT", "S" };
+            string position;
+            Dictionary<string, string> positionToStatTypeMapping = new Dictionary<string, string> {
+                                                                                                    {"QB","PASSING"},
+                                                                                                    {"RB", "RUSHING"},
+                                                                                                    {"WR", "RECEIVING"},
+                                                                                                    {"TE", "RECEIVING"},
+                                                                                                    {"DEFENSIVE", "DEFENSIVE"},
+                                                                                                    {"OTHER", "SCORING"}
+                                                                                                };
+
+            var query = _context.Players.FirstOrDefault(player => player.PlayerID == playerid);
+
+            //position = defensivepositions.Contains(query.Position) ? "DEFENSIVE" : query.Position;
+            //if (!positionToStatTypeMapping.TryGetValue(query.Position,out position))
+            if(defensivePositions.Contains(query.Position))  
+            {
+                position = "DEFENSIVE";
+            }
+            else if (!positionToStatTypeMapping.TryGetValue(query.Position, out position))
+            {
+                position = "SCORING";
+            }
+            return position;
         }
     }
 }

@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 using LinqToTwitter;
-using System.Configuration;
-using LinqToTwitter.Common;
-using LinqToTwitter.Security;
-using LinqToTwitter.Serialization;
-using System.Diagnostics;
 
 namespace StatsTwitterBot.Classes
 {

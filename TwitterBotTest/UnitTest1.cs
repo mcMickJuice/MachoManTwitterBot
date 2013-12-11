@@ -1,90 +1,81 @@
-﻿using System;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StatsTwitterBot.Objects;
 using StatsTwitterBot.Classes;
+using StatsTwitterBot.Objects;
 
 namespace TwitterBotTest
 {
- 
+
     [TestClass]
     public class UnitTest1
     {
-    //    #region GetPlayerType Test Methods
-    //    [TestMethod]
-    //    public void TestGetPlayerTypeWithName_QB()
-    //    {
-    //        DataAccessor dAccess = new DataAccessor();
-    //        string expected = "QB";
-    //        TweetParameters tparams = new TweetParameters { FirstName = "Tom", LastName = "Brady" };
+        private DataAccessor _dataAccess = new DataAccessor();
 
-    //        var result = dAccess.GetPlayerType(tparams);
+        //dbacccessmethods
+        #region
+        [TestMethod]
+        public void TestGetPlayerIDByName()
+        {
+            int expectedPlayerId = 4;
+            string firstName = "Thurman";
+            string lastName = "Thomas";
 
-    //        Assert.AreEqual(expected, result);
-    //    }
+            var result = _dataAccess.GetIdByName(firstName + lastName).FirstOrDefault();
 
-    //    [TestMethod]
-    //    public void TestGetPlayerTypeWithName_Defensive()
-    //    {
-    //        DataAccessor dAccess = new DataAccessor();
-    //        string expected = "Defensive";
-    //        TweetParameters tparams = new TweetParameters { FirstName = "Clay", LastName = "Matthews" };
+            Assert.AreEqual(expectedPlayerId, result);
+        }
 
-    //        var result = dAccess.GetPlayerType(tparams);
+        [TestMethod]
+        public void TestGetPlayerIdByName_NotFound()
+        {
+            int expectedPlayerId = 0;
+            string firstName = "Bug Rar Who";
+            string lastName = "Thomas";
 
-    //        Assert.AreEqual(expected, result);
-    //    }
+            var result = _dataAccess.GetIdByName(firstName + lastName).FirstOrDefault();
 
-    //    [TestMethod]
-    //    public void TestGetPlayerTypeWithName_NOTFOUND()
-    //    {
-    //        DataAccessor dAccess = new DataAccessor();
-    //        string expected = "Player not found";
-    //        TweetParameters tparams = new TweetParameters { FirstName = "Leroy", LastName = "Jkdfi" };
+            Assert.AreEqual(expectedPlayerId, result);
+        }
 
-    //        var result = dAccess.GetPlayerType(tparams);
+        [TestMethod]
+        public void TestGetPlayerIdByNumberAndPosition()
+        {
+            int expectedPlayerId = 8439;
+            string number = "12";
+            string team = "GB";
 
-    //        Assert.AreEqual(expected, result.Substring(0, expected.Length));
-    //    }
+            var result = _dataAccess.GetIdByNumberAndTeam(team, number);
 
-    //    [TestMethod]
-    //    public void TestGetPlayerTypeWithTeamAbbrevAndNumber_WR()
-    //    {
-    //        DataAccessor dAccess = new DataAccessor();
-    //        string expected = "WR";
-    //        TweetParameters tparams = new TweetParameters { Team = "GB", Number = "87" };
+            Assert.AreEqual(expectedPlayerId, result);
+        }
 
-    //        var result = dAccess.GetPlayerType(tparams);
+        [TestMethod]
+        public void TestGetPlayerIdByNumberAndPosition_NotFound()
+        {
+            int expectedPlayerId = 0;
+            string number = "99";
+            string team = "xxx";
 
-    //        Assert.AreEqual(expected, result);
-    //    }
+            var result = _dataAccess.GetIdByNumberAndTeam(team, number);
 
-    //    [TestMethod]
-    //    public void TestGetPlayerTypeWithTeamAbbrevAndNumber_Defensive()
-    //    {
-    //        DataAccessor dAccess = new DataAccessor();
-    //        string expected = "Defensive";
-    //        TweetParameters tparams = new TweetParameters { Team = "GB", Number = "90" };
+            Assert.AreEqual(expectedPlayerId, result);
+        }
+        #endregion 
 
-    //        var result = dAccess.GetPlayerType(tparams);
+        //Twitter objects
+        #region
+        //private StatSetFactory _statSetFactory = new StatSetFactory();
 
-    //        Assert.AreEqual(expected, result);
-    //    }
+        //[TestMethod]
+        //public void TestGetRushingStats()
+        //{
+        //    var rushingStatSet = _statSetFactory.GetStatSet("Rushing");
+        //    string value = rushingStatSet.GetStatString()
 
-    //    [TestMethod]
-    //    public void TestGetPlayerTypeWithTeamAbbrevAndNumber_NotFound()
-    //    {
-    //        DataAccessor dAccess = new DataAccessor();
-    //        string expected = "Player not found";
-    //        TweetParameters tparams = new TweetParameters { Team = "GB", Number = "9150" };
+        //    Assert.
+        //}
 
-    //        var result = dAccess.GetPlayerType(tparams);
 
-    //        Assert.AreEqual(expected, result.Substring(0,expected.Length));
-    //    }
-    //#endregion
-    //    #region Twitter Action Test Methods
-    //    //[TestMethod]
-    //    //public void GetMentionedTweets
-    //    #endregion
+        #endregion
     }
 }

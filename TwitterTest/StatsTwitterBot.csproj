@@ -65,6 +65,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
@@ -92,14 +93,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\DataAccessor.cs" />
-    <Compile Include="Classes\DefensiveStatSet.cs" />
-    <Compile Include="Classes\PassingStatSet.cs" />
-    <Compile Include="Classes\ReceivingStatSet.cs" />
-    <Compile Include="Classes\RushingStatSet.cs" />
-    <Compile Include="Classes\ScoringStatSet.cs" />
-    <Compile Include="Classes\StatSet.cs" />
-    <Compile Include="Classes\StatSetFactory.cs" />
-    <Compile Include="Objects\Log.cs" />
+    <Compile Include="Objects\DefensiveStatSet.cs" />
+    <Compile Include="Objects\PassingStatSet.cs" />
+    <Compile Include="Objects\ReceivingStatSet.cs" />
+    <Compile Include="Objects\RushingStatSet.cs" />
+    <Compile Include="Objects\ScoringStatSet.cs" />
+    <Compile Include="Objects\StatSet.cs" />
+    <Compile Include="Objects\StatSetFactory.cs" />
     <Compile Include="Classes\TwitterAuthorizer.cs" />
     <Compile Include="Classes\TwitterAction.cs" />
     <Compile Include="Classes\TwitterBot.cs" />
@@ -137,7 +137,6 @@
     <Compile Include="Players.cs">
       <DependentUpon>ESPNStats.tt</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PuntingStats.cs">
       <DependentUpon>ESPNStats.tt</DependentUpon>
@@ -159,11 +158,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <EntityDeploy Include="ESPNStats.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ESPNStats.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="App.Config" />
     <None Include="ESPNStats.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ESPNStats.edmx</DependentUpon>
@@ -177,7 +176,6 @@
       <DependentUpon>ESPNStats.edmx</DependentUpon>
       <LastGenOutput>ESPNStats.cs</LastGenOutput>
     </None>
-    <None Include="NLog.config" />
     <None Include="packages.config" />
     <None Include="TwitterTest_TemporaryKey.pfx" />
   </ItemGroup>

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StatsTwitterBot.Objects;
 
-namespace StatsTwitterBot.Classes
+namespace StatsTwitterBot.Objects
 {
-    class StatSetFactory
+    internal class StatSetFactory
     {
         public StatSet GetStatSet(string stattype)
         {

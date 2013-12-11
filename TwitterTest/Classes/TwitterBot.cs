@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LinqToTwitter;
-using System.Text.RegularExpressions;
+using NLog;
 using StatsTwitterBot.Objects;
 
 namespace StatsTwitterBot.Classes
@@ -15,6 +13,7 @@ namespace StatsTwitterBot.Classes
         TwitterAction _twitterAction;
         DataAccessor _dbAccess;
         StatSetFactory _statSetFactory;
+        protected static NLog.Logger logger = LogManager.GetCurrentClassLogger();
 
         public TwitterBot()
         {
@@ -26,7 +25,7 @@ namespace StatsTwitterBot.Classes
             }
             catch (Exception e)
             {
-                //log exception
+                logger.Error("Error in TwitterBot Initialization", e);
             }
 
             _dbAccess = new DataAccessor();
@@ -35,110 +34,70 @@ namespace StatsTwitterBot.Classes
 
         public int Run()
         {
-            long _lastID = _dbAccess.GetLastTweetID();
+            long lastID = _dbAccess.GetLastTweetID();
             int numberOfTweets = 0;
 
             if (!_twitterAction.IsAuthorized)
             {
-                //add session maintainer
-                return -1;
-            }
-
-            _tweets = _twitterAction.GetMentionedTweets(Convert.ToUInt64(_lastID));
-
-            if (_tweets != null)
-            {
-                foreach (var tweet in _tweets)
+                try
                 {
-                    string outgoingtweet = BuildReplyTweet(tweet);
-
-                    _twitterAction.TweetSomething(outgoingtweet);
-                    numberOfTweets += 1;
-                    System.Threading.Thread.Sleep(2000);
-
-                    _dbAccess.InsertTweetID(Convert.ToInt64(tweet.StatusID));
+                    logger.Warn("Twitter Auth lost. Attempting Reauthorization");
+                    _twitterAction.AuthorizeTwitterAction();
+                }
+                catch (Exception e)
+                {
+                    logger.Error("Twitter Auth lost. Failed Reauthorization", e);
+                    throw e;
                 }
             }
 
+            _tweets = _twitterAction.GetMentionedTweets(Convert.ToUInt64(lastID));
+
+            foreach (var tweet in _tweets)
+            {
+                List<string> outgoingTweets = BuildReplyTweets(tweet);
+
+                numberOfTweets += _twitterAction.TweetSomething(outgoingTweets);
+
+                outgoingTweets.ForEach(outgoingTweet =>
+                    {
+                        _dbAccess.InsertTweetID(Convert.ToInt64(tweet.StatusID), tweet.Text, outgoingTweet);
+                    });
+                
+            }
+
+            logger.Trace(String.Format("{0} tweets tweeted", numberOfTweets));
             return numberOfTweets;
         }
 
-        private string BuildReplyTweet(Status tweet)
+        private List<string> BuildReplyTweets(Status tweet)
         {
             string replyTo = tweet.User.Identifier.ScreenName;
-            TweetParameters tParams = ParseTweetParameters(tweet.Entities.HashTagEntities);
+            var tParams = new TweetParameters(tweet.Entities.HashTagEntities);
             string statType = "";
-            string number ="";
-            string team = "";
-            int? season = tParams.Season;
+            var playerIds = new List<int>();
+            var finalizedTweets = new List<string>();
             
-            if (tParams.FirstName != null && tParams.LastName != null)
+            if (tParams.Number != null && tParams.Team != null)
             {
-                Tuple<string,string> numberAndTeam = _dbAccess.GetNumberAndTeam(tParams.FirstName, tParams.LastName);
-                if (numberAndTeam == null)
-                {
-                    //tweet return cant do anything tweet
-                }
-
-                number = numberAndTeam.Item1;
-                team = numberAndTeam.Item2;
+                playerIds.Add(_dbAccess.GetIdByNumberAndTeam(tParams.Team, tParams.Number));
             }
-            else if (tParams.Number != null && tParams.Team != null)
+            else if (tParams.Name != null)
             {
-                number = tParams.Number;
-                team = tParams.Team;
+                playerIds = _dbAccess.GetIdByName(tParams.Name);
             }
-            else
-            {
-                return GetFinalizedTweet(replyTo, tweet.Text, false);
-            }
+            
 
-            statType = tParams.StatType != null ? tParams.StatType : _dbAccess.GetStatType(number, team);
-
-            if (statType == null)
-            {
-                return GetFinalizedTweet(replyTo, tweet.Text, false);
-            }
-
-            StatSet statSet = _statSetFactory.GetStatSet(statType);
-            string statString = statSet.GetStatString(season, number, team);
-
-            return GetFinalizedTweet(replyTo, statString, true);
-
-        }
-
-        private TweetParameters ParseTweetParameters(List<HashTagEntity> hashtags)
-        {
-            var tParams = new TweetParameters();
-
-            foreach (var hashtag in hashtags)
-            {
-                //season needs to start with year
-                if (hashtag.Tag.StartsWith("year"))
+            playerIds.ForEach(id =>
                 {
-                    tParams.Season = Convert.ToInt32(hashtag.Tag.Replace("year", ""));
-                }
-                else if (hashtag.Tag.IndexOf('x') == 2 || hashtag.Tag.IndexOf('x') == 3)
-                {
-                    string[] splithashtag = hashtag.Tag.Split('x');
-                    tParams.Team = splithashtag[0];
-                    tParams.Number = splithashtag[1];
-                }
-                else if (hashtag.Tag.ToUpper().StartsWith("STAT"))
-                {
-                    tParams.StatType = hashtag.Tag.ToUpper().Replace("STAT", "");
-                }
-                else if (hashtag.Tag.ToUpper().StartsWith("FIRST"))
-                {
-                    tParams.FirstName = hashtag.Tag.ToUpper().Replace("FIRST", "");
-                }
-                else if (hashtag.Tag.ToUpper().StartsWith("LAST"))
-                {
-                    tParams.LastName = hashtag.Tag.ToUpper().Replace("LAST", "");
-                };
-            }
+                    statType = tParams.StatType ?? _dbAccess.GetStatType(id);
+                    StatSet statSet = _statSetFactory.GetStatSet(statType);
+                    string statString = statSet.GetStatString(tParams.Season, id);
+                    finalizedTweets.Add(GetFinalizedTweet(replyTo, statString, true));
+                });
 
-            return tParams;
+            return finalizedTweets;
+
         }
 
         private string GetFinalizedTweet(string replyto, string tweettext, bool isvalidtweet)
@@ -153,7 +112,7 @@ namespace StatsTwitterBot.Classes
             }
             else
             {
-                message = "I can't do anything with this: ";
+                message = "I can't do anything with this: "; //please refer to my README
             }
 
             int truncatedlength = message.Length

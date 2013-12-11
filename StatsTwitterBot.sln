@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachoManTwitterBotService",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterBotTest", "TwitterBotTest\TwitterBotTest.csproj", "{FDD87D65-14AF-45FA-B23C-AD1E08C86E7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterBotConsole", "TwitterBotConsole\TwitterBotConsole.csproj", "{990EA781-710C-48DE-9928-6501902A83A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterMasterBot", "TwitterMasterBot\TwitterMasterBot.csproj", "{2BE58E10-B0F2-482A-AD52-600BE0D29EA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +29,14 @@ Global
 		{FDD87D65-14AF-45FA-B23C-AD1E08C86E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDD87D65-14AF-45FA-B23C-AD1E08C86E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDD87D65-14AF-45FA-B23C-AD1E08C86E7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{990EA781-710C-48DE-9928-6501902A83A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{990EA781-710C-48DE-9928-6501902A83A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{990EA781-710C-48DE-9928-6501902A83A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{990EA781-710C-48DE-9928-6501902A83A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BE58E10-B0F2-482A-AD52-600BE0D29EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BE58E10-B0F2-482A-AD52-600BE0D29EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BE58E10-B0F2-482A-AD52-600BE0D29EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BE58E10-B0F2-482A-AD52-600BE0D29EA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

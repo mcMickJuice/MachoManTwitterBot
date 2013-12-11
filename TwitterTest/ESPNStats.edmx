@@ -245,10 +245,13 @@
         </EntityType>
         <EntityType Name="TweetIDs">
           <Key>
-            <PropertyRef Name="TweetID" />
+            <PropertyRef Name="TweetIdentityID" />
           </Key>
+          <Property Name="TweetIdentityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TweetID" Type="bigint" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IncomingTweet" Type="nvarchar" MaxLength="300" />
+          <Property Name="OutgoingTweet" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <Association Name="FK_DefensiveStats_Players">
           <End Role="Players" Type="ESPNStatsModel.Store.Players" Multiplicity="1" />
@@ -620,10 +623,13 @@
         </EntityType>
         <EntityType Name="TweetIDs">
           <Key>
-            <PropertyRef Name="TweetID" />
+            <PropertyRef Name="TweetIdentityID" />
           </Key>
           <Property Name="TweetID" Type="Int64" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Type="String" Name="IncomingTweet" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="OutgoingTweet" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="TweetIdentityID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <Association Name="FK_DefensiveStats_Players">
           <End Role="Players" Type="ESPNStatsModel.Players" Multiplicity="1" />
@@ -941,6 +947,9 @@
           <EntitySetMapping Name="TweetIDs">
             <EntityTypeMapping TypeName="ESPNStatsModel.TweetIDs">
               <MappingFragment StoreEntitySet="TweetIDs">
+                <ScalarProperty Name="TweetIdentityID" ColumnName="TweetIdentityID" />
+                <ScalarProperty Name="OutgoingTweet" ColumnName="OutgoingTweet" />
+                <ScalarProperty Name="IncomingTweet" ColumnName="IncomingTweet" />
                 <ScalarProperty Name="TweetID" ColumnName="TweetID" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
               </MappingFragment>

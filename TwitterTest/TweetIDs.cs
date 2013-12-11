@@ -16,5 +16,8 @@ namespace StatsTwitterBot
     {
         public long TweetID { get; set; }
         public System.DateTime CreatedDate { get; set; }
+        public string IncomingTweet { get; set; }
+        public string OutgoingTweet { get; set; }
+        public int TweetIdentityID { get; set; }
     }
 }

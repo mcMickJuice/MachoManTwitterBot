@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
-using StatsTwitterBot.Classes;
 using System.Configuration;
+using System.ServiceProcess;
+using System.Timers;
 using NLog;
+using StatsTwitterBot.Classes;
 
 namespace MachoManTwitterBotService
 {
@@ -51,6 +44,7 @@ namespace MachoManTwitterBotService
         protected override void OnStop()
         {
             _logger.Warn("Service stopping at {0}", DateTime.Now.ToLongDateString());
+            _tBot = null;
         }
 
     }

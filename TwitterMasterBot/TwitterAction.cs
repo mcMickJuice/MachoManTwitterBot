@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using LinqToTwitter;
-using NLog;
 
 namespace StatsTwitterBot.Classes
 {
-    class TwitterAction
+    public class TwitterAction
     {
         private PinAuthorizer _pinAuth;
         public bool IsAuthorized { get; private set; }
-        protected static NLog.Logger logger = LogManager.GetCurrentClassLogger();
+        //protected static NLog.Logger logger = LogManager.GetCurrentClassLogger();
 
-        public void AuthorizeTwitterAction()
+        public void AuthorizeTwitterAction(string consumerkey, string consumersecret, string oauthtoken, string accesstoken)
         {
-            var tAuth = new TwitterAuthorizer(); 
+            var tAuth = new TwitterAuthorizer();
 
             try
             {
-                _pinAuth = tAuth.getPin();
+                _pinAuth = tAuth.getPin(consumerkey, consumersecret, oauthtoken, accesstoken);
 
                 if (!_pinAuth.IsAuthorized)
                 {
@@ -29,8 +28,9 @@ namespace StatsTwitterBot.Classes
             }
             catch (Exception e)
             {
-                logger.Error("Error in AuthorizeTwitterAction", e);
+                //logger.Error("Error in AuthorizeTwitterAction", e);
                 IsAuthorized = false;
+                throw e;
             }
         }
 
@@ -38,28 +38,29 @@ namespace StatsTwitterBot.Classes
         {
             int numOfTweets = 0;
             if (IsAuthorized)
+            {
+                using (TwitterContext twitContext = new TwitterContext(_pinAuth))
                 {
-                    using (TwitterContext twitContext = new TwitterContext(_pinAuth))
+                    tweets.ForEach(tweet =>
                     {
-                        tweets.ForEach(tweet =>
-                            {
-                                try
-                                {
-                                    twitContext.UpdateStatus(tweet);
-                                    logger.Info(String.Format("Tweeted {0}", tweet));
+                        try
+                        {
+                            twitContext.UpdateStatus(tweet);
+                            //logger.Info(String.Format("Tweeted {0}", tweet));
 
-                                }
-                                catch (Exception e)
-                                {
-                                    logger.Error(String.Format("Error tweeting message {0}", tweet), e);
-                                }
-                                numOfTweets++;
-                                System.Threading.Thread.Sleep(2000);
-                            });
-                        
-                        
-                    }
+                        }
+                        catch (Exception e)
+                        {
+                            //logger.Error(String.Format("Error tweeting message {0}", tweet), e);
+                            throw e;
+                        }
+                        numOfTweets++;
+                        System.Threading.Thread.Sleep(2000);
+                    });
+
+
                 }
+            }
             return numOfTweets;
         }
 
@@ -72,13 +73,14 @@ namespace StatsTwitterBot.Classes
                     try
                     {
                         twitContext.NewDirectMessage(userscreenname, dm);
-                        logger.Info("Sent DM {0} to user {1}", dm, userscreenname);
+                        //logger.Info("Sent DM {0} to user {1}", dm, userscreenname);
                     }
                     catch (Exception e)
                     {
-                        logger.Error(String.Format("Error sending DM {0} to user {1}", dm, userscreenname),e);
+                        //logger.Error(String.Format("Error sending DM {0} to user {1}", dm, userscreenname), e);
+                        throw e;
                     }
-                    
+
                 }
             }
         }
@@ -100,11 +102,11 @@ namespace StatsTwitterBot.Classes
                 }
                 catch (Exception e)
                 {
-                    logger.Error("Error occurred on GetMentionedTweets", e);
-                    //throw e;
-                    return null;
+                    //logger.Error("Error occurred on GetMentionedTweets", e);
+                    throw e;
+                    //return null;
                 }
-                
+
             }
             else return null;
         }
